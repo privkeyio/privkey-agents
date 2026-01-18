@@ -1,11 +1,11 @@
 {
   "name": "privkey-agents",
-  "description": "Surgical workflow agents for code execution, PR review, PR fixes, refactoring, and stress testing",
-  "version": "1.1.0",
+  "description": "Surgical workflow agents for code execution, PR review, PR fixes, refactoring, stress testing, and security review",
+  "version": "1.2.0",
   "author": {
     "name": "privkey"
   },
   "repository": "https://github.com/privkey/privkey-agents",
   "license": "MIT",
-  "keywords": ["workflow", "code-review", "refactor", "pr", "surgical", "stress-test", "hardening"]
+  "keywords": ["workflow", "code-review", "refactor", "pr", "surgical", "stress-test", "hardening", "security-review"]
 }
