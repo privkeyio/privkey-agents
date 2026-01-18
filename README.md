@@ -48,18 +48,17 @@ Deep audit PR changes and generate high-value review comments.
 3. Generates comments with specific line numbers
 
 **Output format:**
-```
-**File:** `src/auth.ts`
-**Line:** 42-45
-**Code:**
-```ts
-if (user.isAdmin) {
-  grantAccess();
-}
-```
-**Comment:** Missing null check on user object before accessing isAdmin
-**Severity:** Blocker
-```
+
+> **File:** `src/auth.ts`
+> **Line:** 42-45
+> **Code:**
+> ```ts
+> if (user.isAdmin) {
+>   grantAccess();
+> }
+> ```
+> **Comment:** Missing null check on user object before accessing isAdmin
+> **Severity:** Blocker
 
 **Usage:**
 ```
