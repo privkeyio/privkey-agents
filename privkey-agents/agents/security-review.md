@@ -33,14 +33,14 @@ Review for:
 
 ```bash
 # If on a branch, find changed files
-git diff --name-only main...HEAD 2>/dev/null || git diff --name-only HEAD~5
+git diff --name-only $(git merge-base HEAD main 2>/dev/null || echo HEAD~5)..HEAD
 ```
 
 ### 2. Scan for Secrets
 
 ```bash
 # Hardcoded secrets patterns
-rg -i "(password|secret|api[_-]?key|token|credential|private[_-]?key)\s*[=:]\s*['\"][^'\"]{8,}" --type-not lock
+rg -i "(password|secret|api[_-]?key|token|credential|private[_-]?key)\s*[=:]\s*['\"][^'\"]{8,}" -T lock
 rg "-----BEGIN (RSA |EC |DSA |OPENSSH )?PRIVATE KEY-----"
 rg "['\"]sk_live_[a-zA-Z0-9]{24,}['\"]"  # Stripe
 rg "['\"]ghp_[a-zA-Z0-9]{36}['\"]"  # GitHub
@@ -52,20 +52,24 @@ rg "AKIA[0-9A-Z]{16}"  # AWS
 **SQL Injection:**
 ```bash
 # String concatenation in queries
-rg "execute.*\+.*\"|query.*\+.*\"|SELECT.*\+.*WHERE" --type py --type js --type ts --type go --type java
+rg "execute.*\+.*\"|query.*\+.*\"|SELECT.*\+.*WHERE" --type py --type js --type ts --type go --type java --type rust
 rg "fmt\.Sprintf.*SELECT|fmt\.Sprintf.*INSERT|fmt\.Sprintf.*UPDATE" --type go
+rg "format!.*SELECT|format!.*INSERT|format!.*UPDATE" --type rust
 ```
 
 **Command Injection:**
 ```bash
 rg "exec\(|system\(|popen\(|subprocess\.call|os\.system|child_process" --type py --type js --type ts --type go --type java --type ruby
 rg "shell=True" --type py
+rg "Command::new|std::process::Command" --type rust
+rg "system\(|popen\(|execl\(|execv\(|execve\(" --type c --type cpp
 ```
 
 **Path Traversal:**
 ```bash
-rg "\.\./"
 rg "open\(.*\+|readFile\(.*\+|path\.join\(.*req\." --type py --type js --type ts
+rg "File::open.*format!|std::fs::read.*format!" --type rust
+rg "fopen\(.*strcat|fopen\(.*sprintf" --type c --type cpp
 ```
 
 ### 4. Authentication/Authorization
@@ -100,11 +104,11 @@ rg "localStorage\.setItem.*(token|password|secret)" --type js --type ts
 ```bash
 # Dangerous DOM manipulation
 rg "innerHTML\s*=|outerHTML\s*=|document\.write\(" --type js --type ts
-rg "dangerouslySetInnerHTML" --type js --type ts --type jsx --type tsx
+rg "dangerouslySetInnerHTML" --type js --type ts
 rg "\|safe|\|raw" --type html  # Template filters
 
 # Missing output encoding
-rg "v-html=" --type vue
+rg "v-html=" -g "*.vue"
 rg "\{\{.*\|.*\}\}" --type html  # Check if using safe filters
 ```
 
@@ -112,24 +116,46 @@ rg "\{\{.*\|.*\}\}" --type html  # Check if using safe filters
 
 ```bash
 # Weak algorithms
-rg "md5|sha1|des|rc4" -i --type py --type js --type ts --type go --type java
+rg "md5|sha1|des|rc4" -i --type py --type js --type ts --type go --type java --type rust --type c --type cpp
 rg "Math\.random\(\)" --type js --type ts  # Not cryptographically secure
+rg "rand\(\)|srand\(" --type c --type cpp  # Not cryptographically secure
+rg "rand::thread_rng" --type rust  # Check if used for crypto (should use OsRng)
 
 # Weak key sizes
 rg "keysize.*=.*1024|bits.*=.*1024" -i
 ```
 
-### 8. Dependency Vulnerabilities
+### 8. Memory Safety (C/Rust)
+
+```bash
+# Buffer overflows
+rg "strcpy\(|strcat\(|sprintf\(|gets\(" --type c --type cpp
+rg "memcpy\(|memmove\(" --type c --type cpp -A 2
+
+# Use after free / double free
+rg "free\(.*\).*free\(" --type c --type cpp
+rg "free\(" --type c --type cpp -A 5
+
+# Unsafe Rust
+rg "unsafe\s*\{" --type rust
+rg "from_raw_parts|transmute|as_ptr" --type rust
+
+# Integer overflow
+rg "as usize|as u32|as i32" --type rust
+rg "\+ 1\)|\- 1\)" --type c --type cpp
+```
+
+### 9. Dependency Vulnerabilities
 
 ```bash
 # Check for known vulnerable patterns
 npm audit 2>/dev/null || true
 pip-audit 2>/dev/null || true
 cargo audit 2>/dev/null || true
-go list -m -json all 2>/dev/null | grep -i "vulnerable" || true
+govulncheck ./... 2>/dev/null || true
 ```
 
-### 9. Access Control
+### 10. Access Control
 
 ```bash
 # Direct object references
@@ -137,10 +163,10 @@ rg "params\[:id\]|params\.id|req\.params\.id" --type ruby --type js --type ts
 rg "request\.GET\[|request\.POST\[" --type py
 
 # Missing authorization
-rg "def (get|post|put|delete|patch)" --type py -A 5 | grep -v "permission\|authorize\|auth"
+rg "def (get|post|put|delete|patch)" --type py -A 5
 ```
 
-### 10. Security Headers (Web Apps)
+### 11. Security Headers (Web Apps)
 
 ```bash
 # Check for security headers
