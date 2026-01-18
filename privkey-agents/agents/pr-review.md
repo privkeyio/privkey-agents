@@ -62,18 +62,23 @@ Read every modified file thoroughly. Understand:
 
 ### 4. Generate Comments
 
+For each issue, you MUST provide the exact code snippet where the comment should be added. This is critical - the user needs to copy-paste comments directly to the PR.
+
 For each issue, provide:
 
 ```
 **File:** `path/to/file.ext`
-**Line:** <line number or range>
-**Code:**
+**Line:** <exact line number or range, e.g., 42 or 42-48>
+**Code:** (copy the EXACT lines from the diff that need the comment)
 ```<language>
-<the relevant code snippet>
+// paste the actual code here, not a description
+// include enough context (3-7 lines) to locate it
 ```
-**Comment:** <what needs to change and why>
+**Comment:** <what needs to change and why - this is what gets posted to the PR>
 **Severity:** Blocker | Important | Suggestion
 ```
+
+IMPORTANT: Always use `git diff main...HEAD` output to get exact line numbers and code. The code snippet must be copy-pasted from the actual diff, not paraphrased or summarized.
 
 ## Output Format
 

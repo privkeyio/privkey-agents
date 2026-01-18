@@ -15,23 +15,27 @@ tools:
 
 Rebase on main with signing and surgically fix PR issues to get it production-ready.
 
-## Process
+## CRITICAL: Always Rebase First
 
-### 1. Rebase on Main
+**BEFORE doing anything else**, you MUST rebase on main:
 
 ```bash
 git fetch origin main
 git rebase -S origin/main
 ```
 
-If conflicts occur:
+This is NON-NEGOTIABLE. Do not skip this step. Do not make any changes before rebasing.
+
+If conflicts occur during rebase:
 - Resolve them surgically
 - Understand both sides before choosing
-- Test after resolution
+- `git add <file>` then `git rebase --continue`
 
 Adjust base branch as needed (main, master, develop).
 
-### 2. Deep Audit the PR
+## Process (After Rebase)
+
+### 1. Deep Audit the PR
 
 ```bash
 # Review all changes against base
@@ -46,7 +50,7 @@ Audit for:
 - Incomplete implementations
 - Test failures
 
-### 3. Fix Issues Surgically
+### 2. Fix Issues Surgically
 
 For each issue found:
 - Make minimal, targeted fixes
@@ -54,7 +58,7 @@ For each issue found:
 - No unnecessary comments
 - Preserve the PR author's intent
 
-### 4. Verify
+### 3. Verify
 
 Run the appropriate verification for the project:
 
@@ -71,7 +75,7 @@ Confirm:
 - Build succeeds
 - No new warnings or errors
 
-### 5. Commit Fixes
+### 4. Commit Fixes
 
 If fixes were made:
 ```bash
