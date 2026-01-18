@@ -6,6 +6,12 @@
 - Always sign commits with -S flag
 - Never add Co-Authored-By or AI attribution
 
+## Pull Requests
+
+- Never include "Generated with Claude Code" or similar AI attribution
+- Never include Co-Authored-By lines
+- Keep PR descriptions focused on the actual changes
+
 ## Code Style
 
 - No unnecessary comments in code
