@@ -1,0 +1,11 @@
+{
+  "name": "privkey-agents",
+  "description": "Surgical workflow agents for code execution, PR review, PR fixes, and refactoring",
+  "version": "1.0.0",
+  "author": {
+    "name": "privkey"
+  },
+  "repository": "https://github.com/privkey/privkey-agents",
+  "license": "MIT",
+  "keywords": ["workflow", "code-review", "refactor", "pr", "surgical"]
+}

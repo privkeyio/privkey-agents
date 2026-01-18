@@ -1,0 +1,15 @@
+{
+  "name": "privkey-agents",
+  "description": "Surgical workflow agents for code execution, PR review, PR fixes, and refactoring",
+  "owner": {
+    "name": "privkey"
+  },
+  "plugins": [
+    {
+      "name": "privkey-agents",
+      "source": "./privkey-agents",
+      "description": "Surgical workflow agents for code execution, PR review, PR fixes, and refactoring",
+      "version": "1.0.0"
+    }
+  ]
+}
