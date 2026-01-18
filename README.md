@@ -131,6 +131,31 @@ Try to crash code and find memory issues, overflows, segfaults, and security vul
 Stress test the parser module - try to crash it and find any memory issues
 ```
 
+### `security-review`
+
+Review code for security vulnerabilities including OWASP top 10.
+
+**When to use:**
+- After implementing auth/authorization code
+- Adding user input handling or form processing
+- Working with database queries or external APIs
+- Before merging PRs with security-sensitive changes
+
+**What it does:**
+1. Identifies changed files in the branch
+2. Scans for hardcoded secrets and credentials
+3. Checks for injection vulnerabilities (SQL, command, path traversal)
+4. Reviews auth/authorization patterns
+5. Audits for XSS, cryptographic issues, memory safety
+
+**Output format:**
+Findings grouped by severity (Critical, High, Medium, Low) with specific file paths, line numbers, and fix recommendations.
+
+**Usage:**
+```
+Review this branch for security issues before I merge
+```
+
 ## Installation
 
 Clone the repo:
@@ -228,4 +253,4 @@ privkey
 
 ## Version
 
-1.1.0
+1.2.0

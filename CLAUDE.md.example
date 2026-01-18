@@ -33,6 +33,12 @@
 - New abstractions for one-time use
 - Backwards-compatibility shims
 
+## Verification
+
+- Run tests before considering work complete
+- Build/compile to catch errors early
+- Test the actual behavior, don't assume it works
+
 ## Security Reviews
 
 Suggest running security-review agent after:
@@ -42,3 +48,19 @@ Suggest running security-review agent after:
 - Handling file uploads or path operations
 - Adding cryptographic operations
 - Before merging PRs with security-sensitive changes
+
+## Stress Testing
+
+Suggest running stress-test agent after:
+- Implementing parsers or input handlers
+- Writing memory-intensive operations
+- Adding code that handles untrusted data
+- Working with C/Rust unsafe code
+- Before releases to find edge cases
+
+## PR Workflow
+
+- Use pr-review before merging non-trivial PRs
+- Use pr-fixes to prepare branches for merge
+- Run security-review on security-sensitive changes
+- Run stress-test on code handling untrusted input
