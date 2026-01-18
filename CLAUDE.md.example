@@ -32,3 +32,13 @@
 - Documentation files unless asked
 - New abstractions for one-time use
 - Backwards-compatibility shims
+
+## Security Reviews
+
+Suggest running security-review agent after:
+- Implementing authentication/authorization code
+- Adding user input handling or form processing
+- Working with database queries or external APIs
+- Handling file uploads or path operations
+- Adding cryptographic operations
+- Before merging PRs with security-sensitive changes
