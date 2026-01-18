@@ -43,10 +43,17 @@ Read every modified file thoroughly. Understand:
 
 **Critical (Blockers):**
 - Logic errors or bugs
-- Security vulnerabilities (injection, auth bypass, data exposure)
 - Breaking changes without migration path
 - Race conditions or concurrency issues
 - Resource leaks (memory, file handles, connections)
+
+**Security (Blockers):**
+- Injection vulnerabilities (SQL, command, path traversal, XSS, template)
+- Authentication/authorization bypass
+- Sensitive data exposure (secrets, tokens, PII in logs)
+- Insecure cryptography (weak hashing, hardcoded keys, bad randomness)
+- Missing input validation on trust boundaries
+- Unsafe deserialization
 
 **Important:**
 - Missing error handling
@@ -88,8 +95,11 @@ Structure your review as:
 - Overall assessment (ready/not ready to merge)
 - High-value contribution? (yes/no with reasoning)
 
+### Security Issues (must fix)
+<list of security-related blockers>
+
 ### Blockers (must fix)
-<list of blocker comments>
+<list of other blocker comments>
 
 ### Important (should fix)
 <list of important comments>
@@ -101,10 +111,11 @@ Structure your review as:
 
 Skip trivial nitpicks. Focus on:
 - Issues that would cause bugs in production
-- Security concerns
+- Security vulnerabilities and unsafe patterns
 - Significant maintainability problems
 - Missing edge case handling
 - Architectural concerns
+- Input validation at trust boundaries
 
 Do NOT comment on:
 - Minor style preferences (unless egregiously inconsistent)

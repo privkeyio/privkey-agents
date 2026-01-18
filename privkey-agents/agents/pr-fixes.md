@@ -44,11 +44,18 @@ git diff origin/main...HEAD
 
 Audit for:
 - Bugs and logic errors
-- Security issues
 - Performance problems
 - Missing error handling
 - Incomplete implementations
 - Test failures
+
+**Security issues:**
+- Injection vulnerabilities (SQL, command, path traversal, XSS)
+- Auth bypass or privilege escalation
+- Sensitive data exposure (secrets in code, PII in logs)
+- Insecure crypto (weak hashing, hardcoded keys)
+- Missing input validation on trust boundaries
+- Unsafe deserialization
 
 ### 2. Fix Issues Surgically
 

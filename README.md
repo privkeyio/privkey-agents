@@ -1,6 +1,6 @@
 # privkey-agents
 
-Surgical workflow agents for Claude Code. Language-agnostic agents for precise code execution, PR review, PR fixes, and refactoring.
+Surgical workflow agents for Claude Code. Language-agnostic agents for precise code execution, PR review, PR fixes, refactoring, and stress testing.
 
 ## Overview
 
@@ -105,6 +105,32 @@ Refactor code for simplicity and keep files under 500 lines.
 Refactor the src/services directory - files are getting too long
 ```
 
+### `stress-test`
+
+Try to crash code and find memory issues, overflows, segfaults, and security vulnerabilities.
+
+**When to use:**
+- Hardening code before release
+- Finding edge cases and crash conditions
+- Security testing and fuzzing
+- Memory leak and corruption detection
+
+**What it does:**
+1. Identifies attack surface (input handlers, memory ops, etc.)
+2. Runs static analysis and sanitizers
+3. Fuzzes inputs and tests edge cases
+4. Tests for security vulnerabilities (injection, auth bypass)
+5. Fixes issues surgically with verification
+
+**Language-specific support:**
+- **C**: Buffer overflow detection, sanitizers (ASan, UBSan), valgrind, dangerous function audit
+- **Rust**: Unsafe code audit, Miri for UB detection, panic-across-FFI checks, clippy lints
+
+**Usage:**
+```
+Stress test the parser module - try to crash it and find any memory issues
+```
+
 ## Installation
 
 Clone the repo:
@@ -151,6 +177,7 @@ claude --plugin-dir ./privkey-agents
 - Features requiring careful implementation
 - PR reviews where quality matters
 - Codebases where you want minimal, verified changes
+- Hardening code and finding vulnerabilities before release
 
 **Don't use for:**
 - Quick exploratory changes
@@ -173,10 +200,32 @@ cp CLAUDE.md.example ~/.claude/CLAUDE.md
 
 Claude reads this file for all projects, applying your preferences globally.
 
+## Adding New Agents
+
+1. Create a new `.md` file in `privkey-agents/agents/` with frontmatter:
+   ```yaml
+   ---
+   name: agent-name
+   description: "Description for Claude to know when to use this agent"
+   model: opus
+   tools:
+     - Glob
+     - Grep
+     - Read
+     - Edit
+     - Write
+     - Bash
+   ---
+   ```
+
+2. **Bump the version** in `privkey-agents/.claude-plugin/plugin.json` - Claude Code won't pick up new agents without a version change
+
+3. Run `claude plugins uninstall privkey-agents && claude plugins install ./privkey-agents` or select "Update now" from the plugin menu
+
 ## Author
 
 privkey
 
 ## Version
 
-1.0.0
+1.1.0
