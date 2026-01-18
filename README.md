@@ -51,8 +51,13 @@ Deep audit PR changes and generate high-value review comments.
 ```
 **File:** `src/auth.ts`
 **Line:** 42-45
-**Code:** <snippet>
-**Comment:** Missing null check on user object
+**Code:**
+```ts
+if (user.isAdmin) {
+  grantAccess();
+}
+```
+**Comment:** Missing null check on user object before accessing isAdmin
 **Severity:** Blocker
 ```
 
