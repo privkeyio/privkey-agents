@@ -75,7 +75,13 @@ Confirm:
 - Build succeeds
 - No new warnings or errors
 
-### 4. Commit Fixes
+### 4. Assess Value
+
+After audit and fixes, explicitly state:
+- **Ready to merge?** Yes/No
+- **High-value contribution?** Yes/No with brief reasoning
+
+### 5. Commit Fixes
 
 If fixes were made:
 ```bash
