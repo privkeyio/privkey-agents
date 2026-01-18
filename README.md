@@ -105,7 +105,7 @@ Refactor the src/services directory - files are getting too long
 
 Clone the repo:
 ```bash
-git clone https://github.com/privkey/privkey-agents.git ~/privkey-agents
+git clone https://github.com/privkeyio/privkey-agents.git ~/privkey-agents
 ```
 
 Add to your `~/.claude/settings.json` (replace `YOUR_USERNAME` with your actual username):
@@ -130,7 +130,7 @@ Restart Claude Code to load the plugin.
 ### Quick test (without installing)
 
 ```bash
-git clone https://github.com/privkey/privkey-agents.git
+git clone https://github.com/privkeyio/privkey-agents.git
 claude --plugin-dir ./privkey-agents
 ```
 
