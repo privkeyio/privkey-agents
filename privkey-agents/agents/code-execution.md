@@ -1,6 +1,7 @@
 ---
 name: code-execution
 description: "Surgically execute code changes with verification. Use when making precise, targeted code modifications that must be verified as complete. Triggers on: implement, fix, change, update, add feature, modify code, surgical."
+model: opus
 tools:
   - Glob
   - Grep

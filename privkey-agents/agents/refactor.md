@@ -1,6 +1,7 @@
 ---
 name: refactor
 description: "Refactor code for simplicity and keep files under 500 lines. Use when organizing code, cleaning up, reducing file size, improving structure, or optimizing codebase. Maintains functionality while improving organization."
+model: opus
 tools:
   - Glob
   - Grep

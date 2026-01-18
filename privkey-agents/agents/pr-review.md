@@ -1,6 +1,7 @@
 ---
 name: pr-review
 description: "Deep audit PR changes for high-value review comments. Use when reviewing a pull request, code review, audit changes, or preparing PR feedback. Generates specific line numbers and code references for comments."
+model: opus
 tools:
   - Glob
   - Grep

@@ -1,6 +1,7 @@
 ---
 name: pr-fixes
 description: "Rebase PR on main and surgically fix issues for production. Use when preparing a PR branch for merge, fixing PR issues, or getting a branch production-ready. Includes signed rebase."
+model: opus
 tools:
   - Glob
   - Grep
