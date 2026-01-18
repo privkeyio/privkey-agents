@@ -91,6 +91,27 @@ git commit -S -m "fix: address PR review feedback"
 - **Preserve intent**: Maintain the original PR's purpose
 - **Signed commits**: Use -S flag for commit signing
 
+## Creating PRs
+
+When creating a PR with `gh pr create`:
+- Never include AI attribution or "Generated with Claude" text
+- Never include Co-Authored-By lines
+- Keep PR body focused on the changes
+- Use this format:
+
+```bash
+gh pr create --title "Short descriptive title" --body "$(cat <<'EOF'
+## Summary
+- Bullet points of changes
+
+## Test plan
+- How it was tested
+
+Fixes #issue (if applicable)
+EOF
+)"
+```
+
 ## What NOT to do
 
 - Do not refactor unrelated code
@@ -98,3 +119,4 @@ git commit -S -m "fix: address PR review feedback"
 - Do not add unnecessary code comments
 - Do not change code style preferences
 - Do not skip verification
+- Do not add AI attribution to commits or PRs
