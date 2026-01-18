@@ -91,6 +91,19 @@ git commit -S -m "fix: address PR review feedback"
 - **Preserve intent**: Maintain the original PR's purpose
 - **Signed commits**: Use -S flag for commit signing
 
+## Before Pushing or Creating PRs
+
+**ALWAYS ask for confirmation before `git push` or `gh pr create`.**
+
+Provide a recap:
+1. Summary of commits being pushed
+2. Branch name and remote
+3. Any PR details if creating one
+
+Then ask: "Ready to push?" or "Ready to create PR?"
+
+Wait for user confirmation before proceeding.
+
 ## Creating PRs
 
 When creating a PR with `gh pr create`:
