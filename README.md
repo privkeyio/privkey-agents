@@ -158,6 +158,17 @@ claude --plugin-dir ./privkey-agents
 - Claude Code installed
 - Git repository (for PR agents)
 
+## Global Claude Configuration
+
+Create `~/.claude/CLAUDE.md` to set project-agnostic instructions for Claude. See [CLAUDE.md.example](CLAUDE.md.example) for a starting point:
+
+```bash
+mkdir -p ~/.claude
+cp CLAUDE.md.example ~/.claude/CLAUDE.md
+```
+
+Claude reads this file for all projects, applying your preferences globally.
+
 ## Author
 
 privkey

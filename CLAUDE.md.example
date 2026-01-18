@@ -1,0 +1,28 @@
+# Global Guidelines
+
+## Git Commits
+
+- Use short one-liner commit messages
+- Always sign commits with -S flag
+- Never add Co-Authored-By or AI attribution
+
+## Code Style
+
+- No unnecessary comments in code
+- Prefer simple, readable solutions
+- Follow existing patterns in the codebase
+- No docstrings unless public API
+
+## Changes
+
+- Surgical: only change what's necessary
+- Verify changes work before finishing
+- Don't refactor unrelated code
+- Don't add features beyond what was requested
+
+## Don't Create
+
+- README files unless asked
+- Documentation files unless asked
+- New abstractions for one-time use
+- Backwards-compatibility shims
