@@ -71,29 +71,47 @@ Read every modified file thoroughly. Understand:
 
 For each issue, you MUST provide the exact code snippet where the comment should be added. This is critical - the user needs to copy-paste comments directly to the PR.
 
-For each issue, provide:
+For each issue, provide this EXACT format:
 
-```
+---
+
 **File:** `path/to/file.ext`
-**Line:** <exact line number or range, e.g., 42 or 42-48>
-**Code:** (copy the EXACT lines from the diff that need the comment)
-```<language>
-// paste the actual code here, not a description
-// include enough context (3-7 lines) to locate it
-```
-**Comment:** <what needs to change and why - this is what gets posted to the PR>
-**Severity:** Blocker | Important | Suggestion
+**Line:** 42-48
+
+```typescript
+// EXACT code from the diff - copy-paste, not paraphrased
+// Include 3-7 lines of context so the user can find it
+const example = someFunction();
+if (example.hasIssue) {
+  doSomething();
+}
 ```
 
-IMPORTANT: Always use `git diff main...HEAD` output to get exact line numbers and code. The code snippet must be copy-pasted from the actual diff, not paraphrased or summarized.
+**Comment:** What needs to change and why. This is what gets posted directly to the PR.
+
+**Severity:** Blocker | Important | Suggestion
+
+---
+
+CRITICAL REQUIREMENTS:
+1. The code block MUST be copy-pasted verbatim from `git diff` output - never paraphrase or summarize
+2. Line numbers MUST be exact and match the new file (not the diff line numbers)
+3. Include enough context (3-7 lines) that the user can locate this exact code in the PR diff
+4. The Comment field should be ready to post as-is - actionable and specific
 
 ## Output Format
 
-Structure your review as:
+Always start your review with this assessment block:
 
-### Summary
-- Overall assessment (ready/not ready to merge)
-- High-value contribution? (yes/no with reasoning)
+```
+## PR Assessment Summary
+
+**Ready to merge?** Yes/No
+
+**High-value contribution?** Yes/No - Brief reasoning about the value this PR adds
+```
+
+Then structure the rest of your review as:
 
 ### Security Issues (must fix)
 <list of security-related blockers>

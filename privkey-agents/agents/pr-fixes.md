@@ -17,12 +17,14 @@ Rebase on main with signing and surgically fix PR issues to get it production-re
 
 ## CRITICAL: Always Rebase First
 
-**BEFORE doing anything else**, you MUST rebase on main:
+**BEFORE doing anything else**, you MUST perform an actual git rebase on main:
 
 ```bash
 git fetch origin main
 git rebase -S origin/main
 ```
+
+**IMPORTANT:** This must be a REAL `git rebase` command that replays commits on top of origin/main. Do NOT use merge-base, do NOT use `git merge`, do NOT just compare commits. Actually run `git rebase`.
 
 This is NON-NEGOTIABLE. Do not skip this step. Do not make any changes before rebasing.
 
@@ -82,18 +84,31 @@ Confirm:
 - Build succeeds
 - No new warnings or errors
 
-### 4. Assess Value
-
-After audit and fixes, explicitly state:
-- **Ready to merge?** Yes/No
-- **High-value contribution?** Yes/No with brief reasoning
-
-### 5. Commit Fixes
+### 4. Commit Fixes
 
 If fixes were made:
 ```bash
 git add -A
 git commit -S -m "fix: address PR review feedback"
+```
+
+## Output Format
+
+Always end your response with this assessment block:
+
+```
+## PR Assessment Summary
+
+**Ready to merge?** Yes/No
+
+**High-value contribution?** Yes/No - Brief reasoning about the value this PR adds
+
+### Fixes Made During Review
+- List of any fixes you made (or "None needed")
+
+### Verification
+- Test results
+- Build results
 ```
 
 ## Principles
