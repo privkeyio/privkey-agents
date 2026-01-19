@@ -53,6 +53,37 @@ Task: code-simplifier:code-simplifier
 - Simplify and refine the recently modified code
 ```
 
+### Stage 5: Final Recap and Confirmation
+
+After all stages complete, YOU (the orchestrator) must:
+
+1. Run `git status` and `git diff` to see all uncommitted changes
+2. Run `git log origin/main..HEAD --oneline` to see commits made during the pipeline
+3. Provide a final recap:
+
+```
+## Pipeline Complete
+
+### Changes Made
+- List all fixes, security improvements, and simplifications
+
+### Commits
+- List commits added during this pipeline run
+
+### Uncommitted Changes
+- List any files with uncommitted changes
+
+### Assessment
+**High-value contribution?** Yes/No - Brief reasoning about the value this PR adds
+**Ready to merge?** Yes/No
+```
+
+4. Ask the user: **"Ready to commit and push?"**
+
+5. Only after user confirms:
+   - Commit any uncommitted changes with a descriptive message
+   - Push the branch
+
 ## User Task
 
 $ARGUMENTS
