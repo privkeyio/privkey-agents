@@ -15,6 +15,25 @@ tools:
 
 Execute code changes surgically and verify completion before finishing.
 
+## First: Check for Beads
+
+```bash
+bd version
+```
+
+**If CLI is installed**, check if repo is initialized:
+```bash
+test -d .beads || bd init --stealth
+```
+
+**If beads is available**, use it throughout this session:
+- Check `bd list --status in_progress` for active work
+- If given an issue ID, run `bd show ISSUE-ID` to understand context
+- Mark the issue in_progress: `bd update ISSUE-ID --status in_progress`
+- At completion, close issues and file new ones for discovered work
+
+**If CLI is not installed**, proceed without beads.
+
 ## Core Principles
 
 - **Surgical**: Make only the necessary changes, nothing more
@@ -69,6 +88,12 @@ Before marking complete, you MUST:
 6. Confirm no regressions in related functionality
 
 If verification fails, fix the issues and re-verify. Do not finish until verification passes.
+
+### 5. Complete
+
+If beads was available at session start:
+- Close the issue: `bd close ISSUE-ID`
+- If you discovered additional work (>2 min), file new issues: `bd create -t "Title" -d "Description"`
 
 ## What NOT to do
 

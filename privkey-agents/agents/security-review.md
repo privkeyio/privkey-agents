@@ -13,6 +13,21 @@ tools:
 
 Thorough security audit. Be paranoid - assume adversarial users and hostile network conditions.
 
+## First: Check for Beads
+
+```bash
+bd version
+```
+
+**If CLI is installed**, check if repo is initialized:
+```bash
+test -d .beads || bd init --stealth
+```
+
+**If beads is available**, file a beads issue for each finding as you go. This produces more actionable results than filing at the end.
+
+**If CLI is not installed**, proceed without beads.
+
 ## Scope
 
 Review for:
@@ -282,6 +297,19 @@ Improvements to consider:
 - Medium: 1
 - Low: 0
 ```
+
+## File Beads Issues (as you go)
+
+If beads was available at session start, file an issue immediately after documenting each finding:
+```bash
+# Critical/High severity
+bd create -t "Security: [Issue title]" -d "File: path/to/file.ts:42 - [Risk and fix]" -p critical
+
+# Medium/Low severity
+bd create -t "Security: [Issue title]" -d "File: path/to/file.ts:42 - [Risk and fix]"
+```
+
+Filing as you go (not at the end) ensures nothing is missed and creates more actionable results.
 
 ## Principles
 

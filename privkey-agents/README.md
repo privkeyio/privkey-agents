@@ -309,6 +309,64 @@ Runs `pr-review` asynchronously while you continue working.
 - Git repository (for PR-related agents)
 - Project-specific tools (formatters, test runners, build systems)
 
+## Beads Integration (Optional)
+
+[Beads](https://github.com/steveyegge/beads) is a git-native issue tracker that gives agents shared memory between sessions. When installed, agents will automatically track their work through beads issues.
+
+### What Beads Provides
+
+- **Session continuity** - Agents pick up where previous sessions left off
+- **Work tracking** - Issues track in-progress work, blockers, and completion
+- **Discovery** - Agents file new issues for work they discover (>2 min tasks)
+- **Context** - Issue descriptions provide context for future agent sessions
+
+### Installation
+
+1. Install the CLI:
+```bash
+curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
+```
+
+2. Verify installation:
+```bash
+bd version
+```
+
+3. (Optional) Initialize beads manually if you want shared tracking:
+```bash
+bd init           # Shared - commits to repo
+bd init --stealth # Local-only - not committed
+```
+If you skip this step, agents will auto-init with `--stealth` (local-only) on first use.
+
+4. Optionally install the Claude Code plugin for beads skills:
+```
+/plugin add beads
+```
+
+### Usage with Agents
+
+Agents check for beads at startup:
+1. Run `bd version` to check if CLI is installed
+2. If installed, run `test -d .beads || bd init --stealth` to ensure repo is initialized (stealth mode keeps files local-only)
+
+If beads is available, agents will:
+- Check for active issues at session start
+- Mark issues as `in_progress` when starting work
+- File new issues for discovered work (>2 min tasks)
+- Close issues when verification passes
+
+If the CLI is not installed, agents work normally without issue tracking.
+
+### Best Practices
+
+- **One task per session** - Each agent should tackle one task, then restart. Beads preserves context between sessions, saving money and improving performance.
+- **File issues liberally** - Ask agents to file beads for any work taking >2 minutes. For code reviews, tell agents to "file beads as you go" for more actionable results.
+- **Plan outside, then import** - Use your planning tool first, then ask the agent to file beads epics and issues from the plan. Have it review and refine the issues before workers start.
+- **Use short prefixes** - Configure a 2-3 character prefix (e.g., `ym-` instead of `yam-project-`) for readability.
+- **Keep database small** - Run `bd cleanup` every few days. Keep under ~200 active issues for best performance.
+- **Daily hygiene** - Run `bd doctor --fix` and `bd upgrade` regularly to stay current and fix issues.
+
 ## Troubleshooting
 
 ### Agent doesn't trigger
@@ -343,4 +401,4 @@ Privkey (hello@privkey.io)
 
 ## Version
 
-1.3.5
+1.5.4

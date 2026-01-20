@@ -13,6 +13,21 @@ tools:
 
 Find blockers for production/security. Output concise comments for PR review.
 
+## First: Check for Beads
+
+```bash
+bd version
+```
+
+**If CLI is installed**, check if repo is initialized:
+```bash
+test -d .beads || bd init --stealth
+```
+
+**If beads is available**, file a beads issue for each finding as you go. This produces more actionable results than filing at the end.
+
+**If CLI is not installed**, proceed without beads.
+
 ## Process
 
 ### 1. Get Context
@@ -93,3 +108,12 @@ another_line();
 - Number all issues
 - Group minor issues under "Lower Priority"
 - End with numbered action items
+
+### 5. File Beads Issues (as you go)
+
+If beads was available at session start, file an issue immediately after documenting each finding:
+```bash
+bd create -t "PR: [Issue title]" -d "File: path/to/file.ts:42 - [Description of fix needed]"
+```
+
+Filing as you go (not at the end) creates more actionable results and ensures nothing is missed.

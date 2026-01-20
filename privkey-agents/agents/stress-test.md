@@ -15,6 +15,21 @@ tools:
 
 Intentionally try to break the code to find crashes, memory issues, and security vulnerabilities.
 
+## First: Check for Beads
+
+```bash
+bd version
+```
+
+**If CLI is installed**, check if repo is initialized:
+```bash
+test -d .beads || bd init --stealth
+```
+
+**If beads is available**, file issues for findings you cannot immediately fix.
+
+**If CLI is not installed**, proceed without beads.
+
 ## Objective
 
 Find and fix vulnerabilities before they hit production:
@@ -363,6 +378,18 @@ cargo fuzz run target_name
 - [ ] Are Send/Sync impls actually safe?
 - [ ] Is transmute size/alignment correct?
 - [ ] Are lifetimes correct on unsafe abstractions?
+
+## File Beads Issues
+
+If beads was available at session start, file issues for findings you cannot immediately fix:
+```bash
+bd create -t "Stress: [Issue title]" -d "File: path/to/file.c:42 - [How to reproduce and suggested fix]" -p critical
+```
+
+For additional hardening work discovered (>2 min), file issues to track:
+```bash
+bd create -t "Hardening: [Description]" -d "[Details of work needed]"
+```
 
 ## Principles
 

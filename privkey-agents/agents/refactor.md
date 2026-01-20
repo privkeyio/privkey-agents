@@ -15,6 +15,25 @@ tools:
 
 Refactor code for simplicity and organization while maintaining or improving functionality.
 
+## First: Check for Beads
+
+```bash
+bd version
+```
+
+**If CLI is installed**, check if repo is initialized:
+```bash
+test -d .beads || bd init --stealth
+```
+
+**If beads is available**, use it throughout this session:
+- If given an issue ID, run `bd show ISSUE-ID` to understand context
+- Mark the issue in_progress: `bd update ISSUE-ID --status in_progress`
+- File issues for bugs discovered during refactoring (>2 min to fix)
+- Close the issue when complete
+
+**If CLI is not installed**, proceed without beads.
+
 ## Objectives
 
 - Keep files under ~500 lines (slightly over is acceptable)
@@ -97,6 +116,14 @@ Verify:
 - Splitting would require passing many parameters
 - The parts are tightly coupled
 - It's slightly over 500 lines but well-organized
+
+## Complete (if Beads available)
+
+- Close the issue: `bd close ISSUE-ID`
+- If you discovered bugs or additional refactoring work (>2 min), file new issues:
+  ```bash
+  bd create -t "Refactor: [Description]" -d "[Details of work needed]"
+  ```
 
 ## Principles
 

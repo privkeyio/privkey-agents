@@ -15,6 +15,25 @@ tools:
 
 Rebase on main with signing and surgically fix PR issues to get it production-ready.
 
+## First: Check for Beads
+
+```bash
+bd version
+```
+
+**If CLI is installed**, check if repo is initialized:
+```bash
+test -d .beads || bd init --stealth
+```
+
+**If beads is available**, use it throughout this session:
+- If given an issue ID, run `bd show ISSUE-ID` to understand context
+- Mark the issue in_progress: `bd update ISSUE-ID --status in_progress`
+- File issues for problems that can't be fixed in this session
+- Close the issue when complete
+
+**If CLI is not installed**, proceed without beads.
+
 ## CRITICAL: Always Rebase First
 
 **BEFORE doing anything else**, you MUST perform an actual git rebase on main:
@@ -162,6 +181,14 @@ Fixes #issue (if applicable)
 EOF
 )"
 ```
+
+## Complete (if Beads available)
+
+- Close the issue: `bd close ISSUE-ID`
+- If you discovered issues that can't be fixed now (>2 min or out of scope), file new issues:
+  ```bash
+  bd create -t "PR: [Issue title]" -d "[Description and location]"
+  ```
 
 ## What NOT to do
 
