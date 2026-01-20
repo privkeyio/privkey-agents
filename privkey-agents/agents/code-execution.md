@@ -42,6 +42,10 @@ Execute code changes surgically and verify completion before finishing.
 ### 4. Verify
 Run appropriate verification for the language/framework:
 
+**Format verification:**
+- Run the project's formatter (cargo fmt, prettier, black, gofmt, etc.)
+- Fix any formatting issues before proceeding
+
 **Build/Compile verification:**
 - Compiled languages: run the build command
 - Interpreted languages: run syntax checks or linters if available
@@ -57,11 +61,12 @@ Run appropriate verification for the language/framework:
 ## Verification Requirements
 
 Before marking complete, you MUST:
-1. Run the build/compile step if applicable
-2. Run relevant tests if they exist
-3. Verify the specific functionality works
-4. Check for any errors or warnings introduced
-5. Confirm no regressions in related functionality
+1. Run the formatter and fix any issues
+2. Run the build/compile step if applicable
+3. Run relevant tests if they exist
+4. Verify the specific functionality works
+5. Check for any errors or warnings introduced
+6. Confirm no regressions in related functionality
 
 If verification fails, fix the issues and re-verify. Do not finish until verification passes.
 

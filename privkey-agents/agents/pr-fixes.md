@@ -72,6 +72,9 @@ For each issue found:
 Run the appropriate verification for the project:
 
 ```bash
+# Run formatter check
+# Examples: cargo fmt --check, npm run lint, black --check, gofmt -l, etc.
+
 # Find and run tests
 # Examples: npm test, pytest, go test, cargo test, etc.
 
@@ -80,6 +83,7 @@ Run the appropriate verification for the project:
 ```
 
 Confirm:
+- Formatting passes (run formatter if check fails)
 - All tests pass
 - Build succeeds
 - No new warnings or errors
