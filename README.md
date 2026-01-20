@@ -1,4 +1,4 @@
-# privkey-agents
+# Privkey Agents
 
 Surgical workflow agents for Claude Code.
 
@@ -22,19 +22,14 @@ Or install permanently - see [Installation Guide](docs/installation.md).
 | `stress-test` | Find crashes, memory issues, vulnerabilities |
 | `security-review` | OWASP security scan |
 
-## Usage
+## Commands
 
-Just describe what you want - agents are triggered automatically:
-
-```
-Implement user authentication
-Review this PR for issues
-Get this branch ready to merge
-Stress test the parser module
-```
+| Command | Description |
+|---------|-------------|
+| `/pr-pipeline` | Run full PR preparation pipeline |
 
 ## Documentation
 
-- [Agent Details](docs/agents.md) - Full documentation for each agent
+- [Plugin README](privkey-agents/README.md) - Full documentation for each agent
 - [Installation Guide](docs/installation.md) - Permanent installation options
 - [CLAUDE.md.example](CLAUDE.md.example) - Global Claude configuration template
