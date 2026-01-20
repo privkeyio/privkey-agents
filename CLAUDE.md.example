@@ -67,4 +67,6 @@ Suggest running stress-test agent after:
 
 ## Agents
 
-- Always run privkey-agents:pr-review in background mode (run_in_background=true), then read the full output file to get complete code snippets
+- Run privkey-agents:pr-review in background mode (run_in_background=true)
+- Use TaskOutput with block=true to get the final result (don't manually parse the output file)
+- Pass through the agent's output verbatim - never omit code or summarize
