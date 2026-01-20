@@ -1,7 +1,7 @@
 {
   "name": "privkey-agents",
   "description": "Surgical workflow agents for code execution, PR review, PR fixes, refactoring, stress testing, security review, and PR pipeline orchestration",
-  "version": "1.3.5",
+  "version": "1.4.1",
   "author": {
     "name": "privkey"
   },

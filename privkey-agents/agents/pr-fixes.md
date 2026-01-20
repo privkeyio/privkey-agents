@@ -44,19 +44,25 @@ Adjust base branch as needed (main, master, develop).
 git diff origin/main...HEAD
 ```
 
-Audit for:
-- Bugs and logic errors
-- Performance problems
-- Missing error handling
+Be paranoid. Assume adversarial users and hostile network conditions.
+
+**Production bugs:**
+- Logic errors that break functionality
+- Missing error handling that causes crashes
+- Race conditions, deadlocks
+- Resource leaks (memory, file handles, connections)
+- Missing timeouts on network/IO operations
 - Incomplete implementations
 - Test failures
 
 **Security issues:**
-- Injection vulnerabilities (SQL, command, path traversal, XSS)
+- Injection (SQL, command, path traversal, XSS, template)
 - Auth bypass or privilege escalation
 - Sensitive data exposure (secrets in code, PII in logs)
-- Insecure crypto (weak hashing, hardcoded keys)
+- Insecure crypto (weak hashing, hardcoded keys, bad randomness)
 - Missing input validation on trust boundaries
+- DoS vectors (unbounded loops, missing timeouts, resource exhaustion)
+- Race conditions in security-critical code
 - Unsafe deserialization
 
 ### 2. Fix Issues Surgically

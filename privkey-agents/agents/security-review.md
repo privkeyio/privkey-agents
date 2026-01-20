@@ -11,7 +11,7 @@ tools:
 
 # Security Review Agent
 
-Focused security audit for code changes. Reviews for vulnerabilities without making changes.
+Thorough security audit. Be paranoid - assume adversarial users and hostile network conditions.
 
 ## Scope
 
@@ -26,6 +26,8 @@ Review for:
 - **Insecure Deserialization**: Untrusted data deserialization
 - **Vulnerable Dependencies**: Known CVEs in dependencies
 - **Logging Failures**: Missing audit logs, sensitive data in logs
+- **DoS Vectors**: Missing timeouts, unbounded loops, resource exhaustion, no rate limiting
+- **Race Conditions**: TOCTOU, concurrent access to shared state, lock ordering issues
 
 ## Process
 
@@ -36,7 +38,16 @@ Review for:
 git diff --name-only $(git merge-base HEAD main 2>/dev/null || echo HEAD~5)..HEAD
 ```
 
-### 2. Scan for Secrets
+### 2. Deep Read All Changed Files
+
+Read EVERY changed file completely. Don't just grep - understand:
+- Data flow from untrusted input to sensitive operations
+- What happens with malicious/unexpected input
+- Concurrency and threading implications
+- Resource lifecycle (allocations, connections, handles, timeouts)
+- Trust boundaries where validation should occur
+
+### 3. Scan for Secrets
 
 ```bash
 # Hardcoded secrets patterns
@@ -47,7 +58,7 @@ rg "['\"]ghp_[a-zA-Z0-9]{36}['\"]"  # GitHub
 rg "AKIA[0-9A-Z]{16}"  # AWS
 ```
 
-### 3. Injection Vulnerabilities
+### 4. Injection Vulnerabilities
 
 **SQL Injection:**
 ```bash
@@ -59,10 +70,19 @@ rg "format!.*SELECT|format!.*INSERT|format!.*UPDATE" --type rust
 
 **Command Injection:**
 ```bash
-rg "exec\(|system\(|popen\(|subprocess\.call|os\.system|child_process" --type py --type js --type ts --type go --type java --type ruby
-rg "shell=True" --type py
+rg "exec\(|system\(|popen\(|child_process" --type js --type ts
 rg "Command::new|std::process::Command" --type rust
 rg "system\(|popen\(|execl\(|execv\(|execve\(" --type c --type cpp
+```
+
+**Format String (C):**
+```bash
+rg "printf\s*\([^\"']|sprintf\s*\([^,]+,[^\"']" --type c --type cpp
+```
+
+**Eval/Dynamic Code (TS):**
+```bash
+rg "eval\(|new Function\(|setTimeout\([^,]+," --type js --type ts
 ```
 
 **Path Traversal:**
@@ -72,7 +92,7 @@ rg "File::open.*format!|std::fs::read.*format!" --type rust
 rg "fopen\(.*strcat|fopen\(.*sprintf" --type c --type cpp
 ```
 
-### 4. Authentication/Authorization
+### 5. Authentication/Authorization
 
 ```bash
 # Missing auth checks
@@ -87,7 +107,7 @@ rg "\.equals\(password\)" --type java
 rg "session\[|req\.session|ctx\.session" --type py --type js --type ts
 ```
 
-### 5. Sensitive Data Exposure
+### 6. Sensitive Data Exposure
 
 ```bash
 # Logging sensitive data
@@ -99,20 +119,19 @@ rg "print.*(password|token|secret)" -i --type py
 rg "localStorage\.setItem.*(token|password|secret)" --type js --type ts
 ```
 
-### 6. XSS Vulnerabilities
+### 7. XSS & Prototype Pollution (TS)
 
 ```bash
 # Dangerous DOM manipulation
 rg "innerHTML\s*=|outerHTML\s*=|document\.write\(" --type js --type ts
 rg "dangerouslySetInnerHTML" --type js --type ts
-rg "\|safe|\|raw" --type html  # Template filters
 
-# Missing output encoding
-rg "v-html=" -g "*.vue"
-rg "\{\{.*\|.*\}\}" --type html  # Check if using safe filters
+# Prototype pollution
+rg "\[.*\]\s*=|Object\.assign\(|\.extend\(|merge\(" --type js --type ts
+rg "__proto__|constructor\[" --type js --type ts
 ```
 
-### 7. Cryptographic Issues
+### 8. Cryptographic Issues
 
 ```bash
 # Weak algorithms
@@ -125,7 +144,7 @@ rg "rand::thread_rng" --type rust  # Check if used for crypto (should use OsRng)
 rg "keysize.*=.*1024|bits.*=.*1024" -i
 ```
 
-### 8. Memory Safety (C/Rust)
+### 9. Memory Safety (C/Rust)
 
 ```bash
 # Buffer overflows
@@ -145,7 +164,33 @@ rg "as usize|as u32|as i32" --type rust
 rg "\+ 1\)|\- 1\)" --type c --type cpp
 ```
 
-### 9. Dependency Vulnerabilities
+### 10. DoS Vectors & Race Conditions
+
+```bash
+# Missing timeouts (look for network/IO without timeout)
+rg "connect\(|accept\(|read\(|recv\(|send\(" --type c --type cpp
+rg "\.read\(|\.write\(|\.connect\(" --type rust
+rg "fetch\(|axios\.|http\." --type js --type ts
+
+# Rust panics on untrusted input (DoS)
+rg "\.unwrap\(\)|\.expect\(" --type rust
+rg "panic!\(|unimplemented!\(|todo!\(" --type rust
+
+# Unbounded loops on external input
+rg "while.*true|for.*;;|loop \{" --type rust --type c --type cpp
+
+# Thread safety issues
+rg "static mut" --type rust
+rg "pthread_|std::thread" --type cpp
+```
+
+Look for in deep read:
+- Network operations without timeout configuration
+- Loops that iterate based on untrusted input length
+- Shared mutable state accessed from multiple threads
+- Lock acquisition order that could deadlock
+
+### 11. Dependency Vulnerabilities
 
 ```bash
 # Check for known vulnerable patterns
@@ -155,7 +200,7 @@ cargo audit 2>/dev/null || true
 govulncheck ./... 2>/dev/null || true
 ```
 
-### 10. Access Control
+### 12. Access Control
 
 ```bash
 # Direct object references
@@ -166,7 +211,7 @@ rg "request\.GET\[|request\.POST\[" --type py
 rg "def (get|post|put|delete|patch)" --type py -A 5
 ```
 
-### 11. Security Headers (Web Apps)
+### 13. Security Headers (Web Apps)
 
 ```bash
 # Check for security headers
