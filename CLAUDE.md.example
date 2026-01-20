@@ -64,3 +64,7 @@ Suggest running stress-test agent after:
 - Use pr-fixes to prepare branches for merge
 - Run security-review on security-sensitive changes
 - Run stress-test on code handling untrusted input
+
+## Agents
+
+- Always run privkey-agents:pr-review in background mode (run_in_background=true), then read the full output file to get complete code snippets

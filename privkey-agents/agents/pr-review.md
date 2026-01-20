@@ -1,6 +1,6 @@
 ---
 name: pr-review
-description: "Deep audit PR changes for high-value review comments. Use when reviewing a pull request, code review, audit changes, or preparing PR feedback. Generates specific line numbers and code references for comments."
+description: "Deep audit PR changes for high-value review comments. Use when reviewing a pull request, code review, audit changes, or preparing PR feedback. Generates specific line numbers and code references for comments. IMPORTANT: Always run in background mode (run_in_background=true) and read the output file to get complete code snippets."
 model: opus
 tools:
   - Glob
@@ -13,9 +13,11 @@ tools:
 
 Deep audit PR changes and generate high-value review comments with specific line numbers.
 
+**IMPORTANT: Every comment MUST include the EXACT verbatim code snippet from the diff. No exceptions.**
+
 ## Objective
 
-Audit the PR to determine if it's ready to merge and is a high-value contribution. Generate actionable review comments that the user can post directly.
+Audit the PR to determine if it's ready to merge and is a high-value contribution. Generate actionable review comments that the user can post directly. Each comment must include the actual code so the user can find it in the PR.
 
 ## Process
 
@@ -69,35 +71,52 @@ Read every modified file thoroughly. Understand:
 
 ### 4. Generate Comments
 
-For each issue, you MUST provide the exact code snippet where the comment should be added. This is critical - the user needs to copy-paste comments directly to the PR.
+For each issue, you MUST provide the exact code snippet where the comment should be added. This is critical - the user needs to find this code in the PR diff.
 
-For each issue, provide this EXACT format:
+**REQUIRED FORMAT FOR EVERY COMMENT:**
 
 ---
 
-**File:** `path/to/file.ext`
-**Line:** 42-48
+**File:** `/path/to/file.ext`
+**Line:** 42-58
 
-```typescript
-// EXACT code from the diff - copy-paste, not paraphrased
-// Include 3-7 lines of context so the user can find it
-const example = someFunction();
-if (example.hasIssue) {
-  doSomething();
-}
+```lang
+var received_version = false;
+var received_verack = false;
+
+while (!received_version or !received_verack) {
+    const message = try readMessage(stream, allocator);
 ```
 
-**Comment:** What needs to change and why. This is what gets posted directly to the PR.
+**Comment:** This handshake loop has no timeout. If a peer never sends a version or verack message, the function will block forever.
 
-**Severity:** Blocker | Important | Suggestion
+**Severity:** Important
 
 ---
 
-CRITICAL REQUIREMENTS:
-1. The code block MUST be copy-pasted verbatim from `git diff` output - never paraphrase or summarize
-2. Line numbers MUST be exact and match the new file (not the diff line numbers)
-3. Include enough context (3-7 lines) that the user can locate this exact code in the PR diff
-4. The Comment field should be ready to post as-is - actionable and specific
+**WHAT TO DO:**
+- Copy-paste 3-10 lines of actual code verbatim - enough to CTRL+F
+- Never use "..." or truncate code
+- Use the correct language identifier for syntax highlighting
+
+**WHAT NOT TO DO:**
+```
+// DON'T do this - summarizing instead of showing actual code:
+pub var magic: u32 = ...  // Network magic bytes
+pub var default_port: u16 = ...  // Default port
+// ... more config vars ...
+
+// DON'T do this - using "..." or truncating:
+fn processData(input: []const u8) !void {
+    // ...
+    return result;
+}
+
+// DON'T do this - paraphrasing or describing:
+// Function that handles network configuration with mutable globals
+```
+
+The user needs to CTRL+F the code snippet to find it in the PR. If you summarize or truncate, they can't find it.
 
 ## Output Format
 
@@ -139,3 +158,7 @@ Do NOT comment on:
 - Minor style preferences (unless egregiously inconsistent)
 - Obvious auto-generated code
 - Test data/fixtures formatting
+
+## Final Reminder
+
+Before submitting your review, verify that EVERY comment includes a verbatim code block that can be CTRL+F'd in the PR diff. If any comment is missing actual code or uses "..." or summaries, go back and fix it.
