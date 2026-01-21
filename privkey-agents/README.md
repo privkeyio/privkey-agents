@@ -309,6 +309,64 @@ Runs `pr-review` asynchronously while you continue working.
 - Git repository (for PR-related agents)
 - Project-specific tools (formatters, test runners, build systems)
 
+## Gastown Integration
+
+Privkey-agents work seamlessly with [Gastown](https://github.com/steveyegge/gastown) for multi-agent orchestration.
+
+### How They Work Together
+
+| Component | Role |
+|-----------|------|
+| **Mayor** | Tells agents what to do, spawns workers |
+| **Polecats** | Run privkey-agents behaviors on well-defined work |
+| **Crew** | Run privkey-agents for design, planning, complex decisions |
+| **Beads** | Tracks all work across agents |
+
+### Example Workflows
+
+**PR Review Sweep:**
+```
+Mayor: "Review all open PRs on the keep rig using pr-review"
+→ Mayor spawns polecats
+→ Each polecat runs pr-review behavior
+→ Files beads for each finding
+→ Reports back to Mayor
+```
+
+**Feature Implementation:**
+```
+Mayor: "Implement user auth on the warden rig"
+→ Mayor creates beads epic
+→ Spawns polecat with code-execution behavior
+→ Polecat implements, verifies, closes bead
+```
+
+**Security Audit:**
+```
+Mayor: "Run security-review on all rigs"
+→ Spawns polecats per rig
+→ Each runs security-review behavior
+→ Files critical/high issues as beads
+```
+
+### Crew vs Polecats
+
+| Use Crew For | Use Polecats For |
+|--------------|------------------|
+| Design discussions | Well-specified beads |
+| Complex decisions | Straightforward implementations |
+| PR Sheriff (standing orders) | One-off reviews |
+| Planning and refinement | Grinding through convoys |
+
+### PR Sheriff Pattern
+
+Assign a crew member as permanent PR Sheriff:
+```
+/pr-sheriff myrig
+```
+
+They'll review incoming PRs on every session, merge easy wins, and flag others for review.
+
 ## Beads Integration (Optional)
 
 [Beads](https://github.com/steveyegge/beads) is a git-native issue tracker that gives agents shared memory between sessions. When installed, agents will automatically track their work through beads issues.
@@ -401,4 +459,4 @@ Privkey (hello@privkey.io)
 
 ## Version
 
-1.5.4
+1.5.5
