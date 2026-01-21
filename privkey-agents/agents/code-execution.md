@@ -93,7 +93,7 @@ If verification fails, fix the issues and re-verify. Do not finish until verific
 
 If beads was available at session start:
 - Close the issue: `bd close ISSUE-ID`
-- If you discovered additional work (>2 min), file new issues: `bd create -t "Title" -d "Description"`
+- If you discovered additional work (>2 min), file new issues: `bd create "Title" -d "Description" --repo .`
 
 ## What NOT to do
 

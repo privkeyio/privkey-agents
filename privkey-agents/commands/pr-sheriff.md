@@ -47,13 +47,13 @@ gh pr list --state open --json number,title,author,additions,deletions,changedFi
 For each easy win:
 1. Run quick `pr-review` to verify no blockers
 2. If clean, merge: `gh pr merge <number> --squash`
-3. File bead: `bd create -t "Merged PR #X: [title]" -d "Auto-merged by PR Sheriff"`
+3. File bead: `bd create "Merged PR #X: [title]" -d "Auto-merged by PR Sheriff" --repo .`
 
 ### 5. Flag for Human Review
 
 For PRs needing review:
 ```bash
-bd create -t "Review PR #X: [title]" -d "[reason it needs human review]" -p high
+bd create "Review PR #X: [title]" -d "[reason it needs human review]" -p 1 --repo .
 ```
 
 ### 6. Report Summary

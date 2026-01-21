@@ -383,12 +383,12 @@ cargo fuzz run target_name
 
 If beads was available at session start, file issues for findings you cannot immediately fix:
 ```bash
-bd create -t "Stress: [Issue title]" -d "File: path/to/file.c:42 - [How to reproduce and suggested fix]" -p critical
+bd create "Stress: [Issue title]" -d "File: path/to/file.c:42 - [How to reproduce and suggested fix]" -p 0 --repo .
 ```
 
 For additional hardening work discovered (>2 min), file issues to track:
 ```bash
-bd create -t "Hardening: [Description]" -d "[Details of work needed]"
+bd create "Hardening: [Description]" -d "[Details of work needed]" --repo .
 ```
 
 ## Principles

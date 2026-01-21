@@ -122,7 +122,7 @@ Verify:
 - Close the issue: `bd close ISSUE-ID`
 - If you discovered bugs or additional refactoring work (>2 min), file new issues:
   ```bash
-  bd create -t "Refactor: [Description]" -d "[Details of work needed]"
+  bd create "Refactor: [Description]" -d "[Details of work needed]" --repo .
   ```
 
 ## Principles

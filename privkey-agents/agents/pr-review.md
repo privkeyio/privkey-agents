@@ -113,7 +113,7 @@ another_line();
 
 If beads was available at session start, file an issue immediately after documenting each finding:
 ```bash
-bd create -t "PR: [Issue title]" -d "File: path/to/file.ts:42 - [Description of fix needed]"
+bd create "PR: [Issue title]" -d "File: path/to/file.ts:42 - [Description of fix needed]" --repo .
 ```
 
 Filing as you go (not at the end) creates more actionable results and ensures nothing is missed.

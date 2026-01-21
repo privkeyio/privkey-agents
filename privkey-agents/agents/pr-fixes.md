@@ -187,7 +187,7 @@ EOF
 - Close the issue: `bd close ISSUE-ID`
 - If you discovered issues that can't be fixed now (>2 min or out of scope), file new issues:
   ```bash
-  bd create -t "PR: [Issue title]" -d "[Description and location]"
+  bd create "PR: [Issue title]" -d "[Description and location]" --repo .
   ```
 
 ## What NOT to do

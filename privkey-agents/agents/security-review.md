@@ -303,10 +303,10 @@ Improvements to consider:
 If beads was available at session start, file an issue immediately after documenting each finding:
 ```bash
 # Critical/High severity
-bd create -t "Security: [Issue title]" -d "File: path/to/file.ts:42 - [Risk and fix]" -p critical
+bd create "Security: [Issue title]" -d "File: path/to/file.ts:42 - [Risk and fix]" -p 0 --repo .
 
 # Medium/Low severity
-bd create -t "Security: [Issue title]" -d "File: path/to/file.ts:42 - [Risk and fix]"
+bd create "Security: [Issue title]" -d "File: path/to/file.ts:42 - [Risk and fix]" --repo .
 ```
 
 Filing as you go (not at the end) ensures nothing is missed and creates more actionable results.
