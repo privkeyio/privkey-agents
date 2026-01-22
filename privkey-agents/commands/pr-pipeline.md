@@ -1,5 +1,5 @@
 ---
-description: "Run PR preparation pipeline: pr-fixes, security-review, code-execution, then code-simplifier"
+description: "Run PR preparation pipeline: security-review, pr-fixes, then code-simplifier"
 argument-hint: "[task description]"
 ---
 
@@ -9,49 +9,51 @@ Execute a multi-stage pipeline to prepare code for PR merge.
 
 ## Pipeline Stages
 
-1. **Stage 1**: `pr-fixes` - Rebase on main, audit and fix PR issues
-2. **Stage 2**: `security-review` - Security audit of the fixed code
-3. **Stage 3**: `code-execution` - Fix any security issues identified
-4. **Stage 4**: `code-simplifier` - Clean up and simplify the code
+1. **Stage 1**: `security-review` - Find security issues (read-only)
+2. **Stage 2**: `pr-fixes` - Rebase on main, fix PR issues + security findings
+3. **Stage 3**: `code-simplifier` - Clean up and simplify the code
 
 ## Instructions
 
 Execute this pipeline using the Task tool. Run stages sequentially, waiting for each to complete.
 
-### Stage 1: PR Fixes
-
-```
-Task: privkey-agents:pr-fixes
-- Rebase on main and fix PR issues
-```
-
-### Stage 2: Security Review
-
-After pr-fixes completes:
+### Stage 1: Security Review
 
 ```
 Task: privkey-agents:security-review
-- Security audit of the fixed code
+- Find security issues (read-only)
+- Save findings for Stage 2
 ```
 
-### Stage 3: Code Execution
+### Stage 2: PR Fixes
 
-If security review found issues:
+Run pr-fixes normally, with security findings included:
 
 ```
-Task: privkey-agents:code-execution
-- Fix the security issues identified
-- Prompt should include the specific issues found
+Task: privkey-agents:pr-fixes
+- Do full pr-fixes job: rebase on main, audit and fix all PR issues
+- Additionally fix these security issues from Stage 1: [include findings]
+- SKIP tests/build verification - will run once at the end
 ```
 
-If no security issues, skip to Stage 4.
-
-### Stage 4: Code Simplification
+### Stage 3: Code Simplification
 
 ```
 Task: code-simplifier:code-simplifier
 - Simplify and refine the recently modified code
+- SKIP tests/build verification - will run once at the end
 ```
+
+### Stage 4: Test & Build
+
+Run tests and build once, after all code changes are complete:
+
+```bash
+# Find and run tests (npm test, pytest, cargo test, go test, etc.)
+# Find and run build (npm run build, cargo build, make, etc.)
+```
+
+Fix any failures before proceeding.
 
 ### Stage 5: Final Recap and Confirmation
 
@@ -90,4 +92,4 @@ $ARGUMENTS
 
 ## Execution
 
-Begin Stage 1 now. Run the pr-fixes agent.
+Begin Stage 1 now. Run the security-review agent.

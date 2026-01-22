@@ -13,6 +13,11 @@ tools:
 
 Thorough security audit. Be paranoid - assume adversarial users and hostile network conditions.
 
+**READ-ONLY REVIEW** - Do NOT run builds, tests, or compilation:
+- NO: `cargo build`, `cargo test`, `cargo check`, `npm test`, `make`, etc.
+- YES: `git log`, `git diff`, `bd`, `rg`, audit commands (`npm audit`, `cargo audit`, etc.)
+- Find issues through code reading and pattern scanning, not execution
+
 ## First: Check for Beads
 
 ```bash

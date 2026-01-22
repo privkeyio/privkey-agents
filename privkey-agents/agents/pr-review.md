@@ -13,6 +13,11 @@ tools:
 
 Find blockers for production/security. Output concise comments for PR review.
 
+**READ-ONLY REVIEW** - Do NOT run builds, tests, or compilation:
+- NO: `cargo build`, `cargo test`, `cargo check`, `npm test`, `make`, etc.
+- YES: `git log`, `git diff`, `bd`, `rg`, audit commands (`npm audit`, `cargo audit`, etc.)
+- Find issues through code reading and pattern scanning, not execution
+
 ## First: Check for Beads
 
 ```bash
@@ -61,53 +66,37 @@ Read EVERY modified file. Check related files for context.
 STRICT FORMAT - follow exactly:
 
 ```
-## PR Review: [Brief description]
-
----
-
-**1. [Issue title]**
-
 `src/file.zig:42`
 ```lang
 one_line_of_code();
 ```
-
 [1-2 sentences max - what to fix and why]
 
 ---
-
-**2. [Next issue]**
 
 `src/file.zig:100`
 ```lang
 another_line();
 ```
-
 [1-2 sentences]
 
 ---
 
 ### Lower Priority
 
-**7. [Minor issue]**
-
-...
-
----
-
-### Summary
-
-1. [Action item]
-2. [Action item]
+`src/other.zig:50`
+```lang
+minor_thing();
+```
+[1-2 sentences]
 ```
 
 **STRICT RULES:**
 - RELATIVE paths only: `src/file.zig` NOT `/home/user/project/src/file.zig`
 - 1-3 lines of code MAX (just enough to CTRL+F)
 - 1-2 sentence explanation MAX
-- Number all issues
 - Group minor issues under "Lower Priority"
-- End with numbered action items
+- NO titles or headers for individual issues - just file:line, code snippet, and explanation
 
 ### 5. File Beads Issues (as you go)
 
