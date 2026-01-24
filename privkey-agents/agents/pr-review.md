@@ -106,3 +106,50 @@ bd create "PR: [Issue title]" -d "File: path/to/file.ts:42 - [Description of fix
 ```
 
 Filing as you go (not at the end) creates more actionable results and ensures nothing is missed.
+
+### 6. Offer Inline PR Comments
+
+After presenting all findings, ask the user:
+> "Would you like me to add these findings as inline comments on the PR?"
+
+If yes, use the GitHub API to add comments directly to the PR.
+
+**Get PR details first:**
+```bash
+gh pr view --json number,headRefOid
+```
+
+**Verify line numbers match the committed version:**
+```bash
+git show {commit_sha}:{file_path} | grep -n "pattern"
+```
+
+**Add inline comment:**
+```bash
+gh api repos/{owner}/{repo}/pulls/{pr_number}/comments \
+  -f body="Missing \`await\` - returns a Promise instead of the actual value." \
+  -f commit_id="{headRefOid}" \
+  -f path="src/lib/Example.ts" \
+  -F line=42 \
+  -f side="RIGHT"
+```
+
+**Comment body rules:**
+- Just the actionable observation - NO titles, headers, or prefixes
+- NO "PR Review:", "Issue:", "Finding:" etc.
+- Write as if it's a code review comment from a colleague
+- Example good: `Missing \`await\` - returns a Promise instead of the actual value.`
+- Example bad: `**Security Issue**: Missing await - returns a Promise...`
+
+**Parameters:**
+- `body` - The comment text (just the finding, no formatting)
+- `commit_id` - SHA from `headRefOid` (required)
+- `path` - Relative file path (e.g., `src/lib/file.ts`)
+- `line` - Line number in the file's committed version
+- `side` - `RIGHT` for new/changed code, `LEFT` for deleted lines
+- Use `-F` (not `-f`) for the numeric `line` parameter
+
+**Notes:**
+- `{owner}` and `{repo}` are auto-populated by gh inside the repo
+- Comments can only be added to lines that appear in the diff
+- Run commands in parallel when adding multiple comments

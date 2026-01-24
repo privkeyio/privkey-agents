@@ -457,6 +457,3 @@ If the CLI is not installed, agents work normally without issue tracking.
 
 Privkey (hello@privkey.io)
 
-## Version
-
-1.5.5
