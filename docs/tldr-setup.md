@@ -32,31 +32,22 @@ Create `~/.mcp.json`:
 
 ## Per-Project Setup
 
-Run once per project:
+Run once per project for full features:
 
 ```bash
 cd /path/to/project
-tldr warm .
+tldr warm .            # Build call graph (~30s)
+tldr semantic index .  # Build semantic embeddings (slower first time)
 ```
 
-This builds the call graph index. Takes ~30 seconds.
+First run of `semantic index` downloads a 1.3GB model to `~/.cache/huggingface/` (one-time, shared across all projects).
 
 ## Usage
 
 ```bash
-tldr structure .                    # See functions/classes
-tldr calls .                        # Build call graph
-tldr impact funcname .              # Find all callers
-tldr context funcname --project .   # LLM-ready summary
+tldr structure .                           # See functions/classes
+tldr calls .                               # Build call graph
+tldr impact funcname .                     # Find all callers
+tldr context funcname --project .          # LLM-ready summary
+tldr semantic search "error handling" .    # Natural language search
 ```
-
-## Semantic Search (optional)
-
-First run downloads a 1.3GB model (cached globally in `~/.cache/huggingface/`):
-
-```bash
-tldr semantic index .
-tldr semantic search "what you're looking for"
-```
-
-Slow on CPU, fast on GPU. Most features work without it.
