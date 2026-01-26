@@ -32,12 +32,15 @@ Create `~/.mcp.json`:
 
 ## Per-Project Setup
 
+```bash
+echo 'alias tldr-start="tldr warm . && tldr semantic index ."' >> ~/.bashrc
+```
+
 Run once per project for full features:
 
 ```bash
 cd /path/to/project
-tldr warm .            # Build call graph (~30s)
-tldr semantic index .  # Build semantic embeddings (slower first time)
+tldr-start
 ```
 
 First run of `semantic index` downloads a 1.3GB model to `~/.cache/huggingface/` (one-time, shared across all projects).
