@@ -54,3 +54,17 @@ tldr impact funcname .                     # Find all callers
 tldr context funcname --project .          # LLM-ready summary
 tldr semantic search "error handling" .    # Natural language search
 ```
+
+## Claude Instructions
+
+Add to `~/.claude/CLAUDE.md` to ensure Claude uses TLDR:
+
+```markdown
+## Code Exploration
+
+- Prefer TLDR MCP tools (mcp__tldr__*) over Grep/Read when exploring code
+- Use mcp__tldr__semantic for finding code by behavior
+- Use mcp__tldr__structure for understanding file/function layout
+- Use mcp__tldr__context for getting function summaries with call graph
+- Fall back to Read only for specific files you already know the path to
+```
