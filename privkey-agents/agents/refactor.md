@@ -15,24 +15,27 @@ tools:
 
 Refactor code for simplicity and organization while maintaining or improving functionality.
 
-## First: Check for Beads
+## First: Check for Beads and TLDR
 
 ```bash
 bd version
+tldr --version
 ```
 
-**If CLI is installed**, check if repo is initialized:
+**Beads:** If CLI is installed, check if repo is initialized:
 ```bash
 test -d .beads || bd init --stealth
 ```
+Use throughout: show issues, mark in_progress, file new issues, close when complete.
 
-**If beads is available**, use it throughout this session:
-- If given an issue ID, run `bd show ISSUE-ID` to understand context
-- Mark the issue in_progress: `bd update ISSUE-ID --status in_progress`
-- File issues for bugs discovered during refactoring (>2 min to fix)
-- Close the issue when complete
+**TLDR:** If CLI is installed, use it for refactoring analysis:
+```bash
+tldr arch .           # Detect architectural layers
+tldr structure .      # See functions/classes
+tldr impact func .    # What breaks if we change this?
+```
 
-**If CLI is not installed**, proceed without beads.
+Proceed without either tool if not installed.
 
 ## Objectives
 

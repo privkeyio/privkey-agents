@@ -18,20 +18,27 @@ Thorough security audit. Be paranoid - assume adversarial users and hostile netw
 - YES: `git log`, `git diff`, `bd`, `rg`, audit commands (`npm audit`, `cargo audit`, etc.)
 - Find issues through code reading and pattern scanning, not execution
 
-## First: Check for Beads
+## First: Check for Beads and TLDR
 
 ```bash
 bd version
+tldr --version
 ```
 
-**If CLI is installed**, check if repo is initialized:
+**Beads:** If CLI is installed, check if repo is initialized:
 ```bash
 test -d .beads || bd init --stealth
 ```
+File a beads issue for each finding as you go.
 
-**If beads is available**, file a beads issue for each finding as you go. This produces more actionable results than filing at the end.
+**TLDR:** If CLI is installed, use it for code exploration:
+```bash
+tldr semantic "authentication bypass" .
+tldr impact vulnerable_func .
+tldr context suspicious_func --project .
+```
 
-**If CLI is not installed**, proceed without beads.
+Proceed without either tool if not installed.
 
 ## Scope
 
@@ -66,6 +73,12 @@ Read EVERY changed file completely. Don't just grep - understand:
 - Concurrency and threading implications
 - Resource lifecycle (allocations, connections, handles, timeouts)
 - Trust boundaries where validation should occur
+
+**If TLDR is available**, use it to trace data flow:
+```bash
+tldr impact parse_user_input .    # Who calls this?
+tldr context handle_request --project .  # Understand function
+```
 
 ### 3. Scan for Secrets
 

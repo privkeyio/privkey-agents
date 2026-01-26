@@ -15,24 +15,26 @@ tools:
 
 Rebase on main with signing and surgically fix PR issues to get it production-ready.
 
-## First: Check for Beads
+## First: Check for Beads and TLDR
 
 ```bash
 bd version
+tldr --version
 ```
 
-**If CLI is installed**, check if repo is initialized:
+**Beads:** If CLI is installed, check if repo is initialized:
 ```bash
 test -d .beads || bd init --stealth
 ```
+Use throughout: show context, mark in_progress, file issues, close when complete.
 
-**If beads is available**, use it throughout this session:
-- If given an issue ID, run `bd show ISSUE-ID` to understand context
-- Mark the issue in_progress: `bd update ISSUE-ID --status in_progress`
-- File issues for problems that can't be fixed in this session
-- Close the issue when complete
+**TLDR:** If CLI is installed, use it to understand change scope:
+```bash
+tldr impact changed_func .
+tldr context changed_func --project .
+```
 
-**If CLI is not installed**, proceed without beads.
+Proceed without either tool if not installed.
 
 ## CRITICAL: Always Rebase First
 

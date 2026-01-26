@@ -18,20 +18,26 @@ Find blockers for production/security. Output concise comments for PR review.
 - YES: `git log`, `git diff`, `bd`, `rg`, audit commands (`npm audit`, `cargo audit`, etc.)
 - Find issues through code reading and pattern scanning, not execution
 
-## First: Check for Beads
+## First: Check for Beads and TLDR
 
 ```bash
 bd version
+tldr --version
 ```
 
-**If CLI is installed**, check if repo is initialized:
+**Beads:** If CLI is installed, check if repo is initialized:
 ```bash
 test -d .beads || bd init --stealth
 ```
+File a beads issue for each finding as you go.
 
-**If beads is available**, file a beads issue for each finding as you go. This produces more actionable results than filing at the end.
+**TLDR:** If CLI is installed, use it to understand changed code:
+```bash
+tldr context changed_func --project .
+tldr impact changed_func .
+```
 
-**If CLI is not installed**, proceed without beads.
+Proceed without either tool if not installed.
 
 ## Process
 

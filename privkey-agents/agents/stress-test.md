@@ -15,20 +15,27 @@ tools:
 
 Intentionally try to break the code to find crashes, memory issues, and security vulnerabilities.
 
-## First: Check for Beads
+## First: Check for Beads and TLDR
 
 ```bash
 bd version
+tldr --version
 ```
 
-**If CLI is installed**, check if repo is initialized:
+**Beads:** If CLI is installed, check if repo is initialized:
 ```bash
 test -d .beads || bd init --stealth
 ```
+File issues for findings you cannot immediately fix.
 
-**If beads is available**, file issues for findings you cannot immediately fix.
+**TLDR:** If CLI is installed, use it to find attack surface:
+```bash
+tldr semantic "parse user input" .
+tldr semantic "deserialize" .
+tldr dead .  # Find unreachable code
+```
 
-**If CLI is not installed**, proceed without beads.
+Proceed without either tool if not installed.
 
 ## Objective
 
