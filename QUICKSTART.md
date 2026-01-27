@@ -28,6 +28,15 @@ curl -fsSL https://raw.githubusercontent.com/steveyegge/gastown/main/scripts/ins
 
 ## Initial Setup
 
+### Global gitignore
+
+Copy the example gitignore to keep tool files out of your repos:
+
+```bash
+cp .gitignore.example ~/.gitignore
+git config --global core.excludesfile ~/.gitignore
+```
+
 ### Create workspace
 
 ```bash
