@@ -1,5 +1,5 @@
 ---
-description: "Run PR preparation pipeline: security-review, pr-fixes, then code-simplifier"
+description: "Run PR preparation pipeline: security-review, pr-review, pr-fixes, verification, then code-simplifier"
 argument-hint: "[task description]"
 ---
 
@@ -9,34 +9,59 @@ Execute a multi-stage pipeline to prepare code for PR merge.
 
 ## Pipeline Stages
 
-1. **Stage 1**: `security-review` - Find security issues (read-only)
-2. **Stage 2**: `pr-fixes` - Rebase on main, fix PR issues + security findings
-3. **Stage 3**: `code-simplifier` - Clean up and simplify the code
+1. **Stage 1**: `security-review` + `pr-review` - Find all issues (read-only, parallel)
+2. **Stage 2**: `pr-fixes` - Rebase on main, fix ALL findings from stage 1
+3. **Stage 3**: `pr-review` - Re-audit changes made by pr-fixes (catch introduced bugs)
+4. **Stage 4**: `code-simplifier` - Clean up and simplify the code
+5. **Stage 5**: Test & Build
 
 ## Instructions
 
-Execute this pipeline using the Task tool. Run stages sequentially, waiting for each to complete.
+Execute this pipeline using the Task tool.
 
-### Stage 1: Security Review
+### Stage 1: Security + Code Quality Review (Parallel)
+
+Run BOTH agents in parallel (single message with multiple Task calls):
 
 ```
 Task: privkey-agents:security-review
 - Find security issues (read-only)
-- Save findings for Stage 2
+
+Task: privkey-agents:pr-review
+- Find memory leaks, logic bugs, consistency issues (read-only)
 ```
 
-### Stage 2: PR Fixes
+Wait for both to complete, then combine findings for Stage 2.
 
-Run pr-fixes normally, with security findings included:
+### Stage 2: PR Fixes
 
 ```
 Task: privkey-agents:pr-fixes
 - Do full pr-fixes job: rebase on main, audit and fix all PR issues
-- Additionally fix these security issues from Stage 1: [include findings]
+- Fix these security issues from Stage 1: [include security-review findings]
+- Fix these code quality issues from Stage 1: [include pr-review findings]
 - SKIP tests/build verification - will run once at the end
 ```
 
-### Stage 3: Code Simplification
+### Stage 3: Verify Changes (Critical)
+
+Re-run pr-review on ONLY the files modified by Stage 2:
+
+```bash
+# Get files changed by pr-fixes
+git diff --name-only HEAD~1
+```
+
+```
+Task: privkey-agents:pr-review
+- Review ONLY files from the list above
+- Focus on: Did pr-fixes introduce new issues?
+- Check: consistency of new constants, error handling, state cleanup
+```
+
+If Stage 3 finds issues, fix them immediately (no new agent needed).
+
+### Stage 4: Code Simplification
 
 ```
 Task: code-simplifier:code-simplifier
@@ -44,7 +69,7 @@ Task: code-simplifier:code-simplifier
 - SKIP tests/build verification - will run once at the end
 ```
 
-### Stage 4: Test & Build
+### Stage 5: Test & Build
 
 Run tests and build once, after all code changes are complete:
 
@@ -55,7 +80,7 @@ Run tests and build once, after all code changes are complete:
 
 Fix any failures before proceeding.
 
-### Stage 5: Final Recap and Confirmation
+### Stage 6: Final Recap and Confirmation
 
 After all stages complete, YOU (the orchestrator) must:
 
