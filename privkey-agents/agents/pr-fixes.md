@@ -67,6 +67,16 @@ git diff origin/main...HEAD
 
 Be paranoid. Assume adversarial users and hostile network conditions.
 
+**Memory & Safety:**
+- Leaks on error paths (try/?/throw skips cleanup)
+- Orphaned resources when overwriting state (clear old before setting new)
+- Missing cleanup in finally/defer/onDestroy
+
+**Consistency:**
+- New constants/sentinels used in ALL code paths (hash, storage, query)
+- State transitions complete (all related fields updated together)
+- Error handling doesn't turn success into failure
+
 **Production bugs:**
 - Logic errors that break functionality
 - Missing error handling that causes crashes
@@ -93,6 +103,24 @@ For each issue found:
 - Follow existing code patterns
 - No unnecessary comments
 - Preserve the PR author's intent
+
+### 2b. Verify Your Own Changes
+
+After EACH fix, immediately check you didn't introduce new issues:
+
+```bash
+# Find all callers/usages of changed function
+tldr impact changed_func .
+
+# Get context for related code paths
+tldr context changed_func --project .
+```
+
+Ask yourself:
+1. Did I update ALL related code paths? (Use tldr impact to find them)
+2. For new constants/values: are they used consistently in hash, storage, AND query?
+3. For error handling changes: can failures in my new code affect the success path?
+4. For state changes: did I clean up the old state before setting new?
 
 ### 3. Verify
 
