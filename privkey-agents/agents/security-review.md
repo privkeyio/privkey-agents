@@ -76,8 +76,10 @@ Read EVERY changed file completely. Don't just grep - understand:
 
 **If TLDR is available**, use it to trace data flow:
 ```bash
-tldr impact parse_user_input .    # Who calls this?
-tldr context handle_request --project .  # Understand function
+tldr impact parse_user_input .              # Who calls this?
+tldr context handle_request --project .     # Understand function
+tldr dfg file.py handle_request             # Trace variable flow (where does untrusted input go?)
+tldr slice file.py handle_request 42        # What affects this sensitive line?
 ```
 
 ### 3. Scan for Secrets

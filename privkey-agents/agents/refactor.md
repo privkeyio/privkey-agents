@@ -49,10 +49,14 @@ Proceed without either tool if not installed.
 
 ### 1. Analyze File Sizes
 
-Find large files in the codebase:
-
+**TLDR (preferred):**
 ```bash
-# Adjust extensions based on the project's languages
+tldr structure .    # Shows functions/classes with line counts per file
+tldr dead .         # Find unreachable functions to remove
+```
+
+**Fallback:**
+```bash
 find . -type f \( -name "*.py" -o -name "*.ts" -o -name "*.js" -o -name "*.go" -o -name "*.rs" -o -name "*.java" -o -name "*.rb" -o -name "*.cpp" -o -name "*.c" \) -not -path "*/node_modules/*" -not -path "*/.git/*" -not -path "*/vendor/*" -not -path "*/dist/*" -not -path "*/build/*" | xargs wc -l 2>/dev/null | sort -n | tail -20
 ```
 

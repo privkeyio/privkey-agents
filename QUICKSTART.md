@@ -114,13 +114,6 @@ After every task, run `gt handoff` or say "let's hand off" to start a fresh sess
 
 Polecats thrive on work that doesn't require decisions. Crew handles the thinking.
 
-### PR Sheriff Pattern
-Assign one crew member permanent standing orders to review incoming PRs:
-```
-"You are the PR Sheriff. On every session, check open PRs,
-merge easy wins, flag others for human review."
-```
-
 ### Code Review Sweeps
 Run regular review sweeps followed by fix sweeps:
 1. Have agents review code and file beads for issues found

@@ -194,6 +194,59 @@ Find crashes, memory issues, overflows, segfaults, and security vulnerabilities.
 
 ---
 
+### `p10-review`
+
+Power of Ten compliance audit for safety-critical C and Rust code.
+
+**What it does:**
+- Audits code against NASA/JPL's 10 rules for safety-critical software (Holzmann)
+- Uses TLDR for call graph analysis (recursion detection), function sizes, and architectural analysis
+- Checks control flow, loop bounds, memory allocation patterns, assertion density
+- Scans for preprocessor/macro abuse, pointer complexity, unchecked return values
+- Runs compiler warnings and static analyzers at pedantic settings (gcc/clang/cppcheck for C, clippy for Rust)
+
+**When to use:**
+- Safety-critical C or Rust code (aerospace, medical, automotive, embedded)
+- Code that must be formally verifiable
+- Hardening critical subsystems
+
+**Usage:**
+```
+"Run P10 review on this module"
+"Check Power of Ten compliance"
+```
+
+**Output:**
+```
+## Power of Ten Compliance Review
+
+### Rule 1: Control Flow — 2 violations
+
+[CRITICAL] src/parser.c:42 — goto statement found
+[HIGH] src/tree.rs:15 — direct recursion detected
+
+## Summary
+| Rule | Violations | Severity |
+|------|-----------|----------|
+| 1    | 2         | Critical |
+
+Overall compliance: 8/10 rules passing
+```
+
+**The 10 rules:**
+1. No goto, setjmp/longjmp, no recursion
+2. All loops must have statically provable upper bounds
+3. No dynamic memory allocation after initialization
+4. Functions max 60 lines
+5. Assertion density >= 2 per function
+6. Data objects at smallest possible scope
+7. Check all return values, validate all parameters
+8. Preprocessor/macro restrictions (C: no token pasting/varargs; Rust: simple macro_rules!, minimal cfg)
+9. Pointer restrictions (C: max one level, no fn ptrs; Rust: restrict raw pointers, flag unsafe/dyn Trait)
+10. Zero compiler warnings, zero static analyzer warnings
+
+---
+
 ### `security-review`
 
 Review code for security vulnerabilities including OWASP top 10.
@@ -355,17 +408,7 @@ Mayor: "Run security-review on all rigs"
 |--------------|------------------|
 | Design discussions | Well-specified beads |
 | Complex decisions | Straightforward implementations |
-| PR Sheriff (standing orders) | One-off reviews |
-| Planning and refinement | Grinding through convoys |
-
-### PR Sheriff Pattern
-
-Assign a crew member as permanent PR Sheriff:
-```
-/pr-sheriff myrig
-```
-
-They'll review incoming PRs on every session, merge easy wins, and flag others for review.
+| Planning and refinement | One-off reviews |
 
 ## Beads Integration (Optional)
 

@@ -71,7 +71,12 @@ Look for:
 
 ### 2. Static Analysis
 
-Run available static analysis tools:
+**TLDR diagnostics (preferred):** Wraps the right type checker + linter per language automatically:
+```bash
+tldr diagnostics .
+```
+
+**Fallback** — run available tools manually:
 
 **C/C++:**
 ```bash
