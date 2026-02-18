@@ -67,6 +67,23 @@ Read EVERY modified file. Check related files for context.
 **Security:**
 - Injection, auth bypass, missing validation, DoS vectors
 
+**DRY Violations:**
+- Copy-pasted logic across changed files (extract to shared function)
+- Repeated error handling that should be a helper
+- Duplicated constants or config values
+
+**Test Gaps:**
+- New code paths without corresponding tests
+- Changed behavior without updated tests
+- Missing edge case coverage (empty input, nulls, boundaries, error paths)
+- Weak assertions (testing existence but not correctness)
+
+**Performance:**
+- N+1 queries or repeated DB/API calls in loops
+- Unbounded allocations in hot paths (Vec::push in a loop, string concat in a loop)
+- Missing pagination on unbounded queries
+- O(n²) or worse where O(n) is possible
+
 ### 4. Output Format
 
 STRICT FORMAT - follow exactly:
