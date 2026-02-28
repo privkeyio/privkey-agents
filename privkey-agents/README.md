@@ -293,6 +293,43 @@ Review code for security vulnerabilities including OWASP top 10.
 - **Medium:** Missing security headers, verbose errors
 - **Low:** Missing audit logging, minor config issues
 
+### `rmp-review`
+
+RMP architecture compliance audit for Rust Multi-Platform apps.
+
+**What it does:**
+- Audits code against the RMP architecture bible's 10 rules
+- Checks that Rust owns business logic and native layers are thin
+- Verifies TEA (Elm Architecture) unidirectional data flow
+- Detects duplicated formatting, native-side state caching, navigation leaks
+- Validates capability bridge correctness and FFI boundary cleanliness
+- Checks platform parity across iOS, Android, and Desktop
+
+**When to use:**
+- Reviewing RMP codebase for architecture drift
+- Before merging PRs on RMP projects
+- Onboarding to an RMP project to find violations
+
+**Usage:**
+```
+"Run RMP review on this project"
+"Check RMP architecture compliance"
+```
+
+**The 10 rules:**
+1. No business logic in native (Swift/Kotlin)
+2. Unidirectional data flow (TEA pattern)
+3. State completeness (no native-side derivation)
+4. Navigation owned by Rust Router
+5. Capability bridge correctness
+6. Actor model integrity
+7. God module prevention
+8. FFI boundary cleanliness
+9. No native-side state caching
+10. Platform parity
+
+---
+
 ## Commands
 
 ### `/pr-pipeline`

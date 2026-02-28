@@ -21,6 +21,7 @@ Or install permanently - see [Installation Guide](docs/installation.md).
 | `refactor` | Simplify code, keep files under 500 lines |
 | `stress-test` | Find crashes, memory issues, vulnerabilities |
 | `security-review` | OWASP security scan |
+| `rmp-review` | RMP architecture compliance audit |
 
 ## Commands
 
