@@ -1,15 +1,23 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "privkey-agents",
-  "description": "Surgical workflow agents for code execution, PR review, PR fixes, and refactoring",
+  "description": "Surgical workflow agents for code execution, PR review, PR fixes, refactoring, stress testing, security review, P10 compliance, RMP review, and PR pipeline orchestration",
   "owner": {
-    "name": "privkey"
+    "name": "PrivKey",
+    "email": "information@privkey.io"
   },
   "plugins": [
     {
       "name": "privkey-agents",
+      "description": "Surgical workflow agents for code execution, PR review, PR fixes, refactoring, stress testing, security review, P10 compliance, RMP review, and PR pipeline orchestration",
+      "version": "1.7.0",
+      "author": {
+        "name": "PrivKey",
+        "email": "information@privkey.io"
+      },
       "source": "./privkey-agents",
-      "description": "Surgical workflow agents for code execution, PR review, PR fixes, and refactoring",
-      "version": "1.0.0"
+      "category": "productivity",
+      "homepage": "https://github.com/privkeyio/privkey-agents"
     }
   ]
 }

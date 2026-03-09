@@ -1,0 +1,4 @@
+.tldr/
+.tldrignore
+.claude/
+*.DS_Store

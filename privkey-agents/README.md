@@ -1,10 +1,10 @@
-# Privkey Agents Plugin
+# PrivKey Agents Plugin
 
 Surgical workflow agents for Claude Code. Built for precision, verification, and production-readiness.
 
 ## Overview
 
-Privkey Agents provides specialized agents for common software engineering workflows. Each agent is designed to do one thing well: execute surgically, verify completely, and produce production-ready results.
+PrivKey Agents provides specialized agents for common software engineering workflows. Each agent is designed to do one thing well: execute surgically, verify completely, and produce production-ready results.
 
 ## Agents
 
@@ -58,7 +58,7 @@ Deep audit of PR changes to find production and security blockers.
 ```
 
 **Output:**
-```
+````
 ## PR Review: [Brief description]
 
 ---
@@ -78,7 +78,7 @@ problematic_line();
 
 1. [Action item]
 2. [Action item]
-```
+````
 
 **Focus areas:**
 - Memory leaks on error paths (try/?/throw skips cleanup)
@@ -293,6 +293,8 @@ Review code for security vulnerabilities including OWASP top 10.
 - **Medium:** Missing security headers, verbose errors
 - **Low:** Missing audit logging, minor config issues
 
+---
+
 ### `rmp-review`
 
 RMP architecture compliance audit for Rust Multi-Platform apps.
@@ -401,7 +403,7 @@ Runs `pr-review` asynchronously while you continue working.
 
 ## Gastown Integration
 
-Privkey-agents work seamlessly with [Gastown](https://github.com/steveyegge/gastown) for multi-agent orchestration.
+PrivKey-agents work seamlessly with [Gastown](https://github.com/steveyegge/gastown) for multi-agent orchestration.
 
 ### How They Work Together
 
@@ -461,26 +463,31 @@ Mayor: "Run security-review on all rigs"
 ### Installation
 
 1. Install the CLI:
-```bash
-curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
-```
+
+   ```bash
+   curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
+   ```
 
 2. Verify installation:
-```bash
-bd version
-```
+
+   ```bash
+   bd version
+   ```
 
 3. (Optional) Initialize beads manually if you want shared tracking:
-```bash
-bd init           # Shared - commits to repo
-bd init --stealth # Local-only - not committed
-```
-If you skip this step, agents will auto-init with `--stealth` (local-only) on first use.
+
+   ```bash
+   bd init           # Shared - commits to repo
+   bd init --stealth # Local-only - not committed
+   ```
+
+   If you skip this step, agents will auto-init with `--stealth` (local-only) on first use.
 
 4. Optionally install the Claude Code plugin for beads skills:
-```
-/plugin add beads
-```
+
+   ```
+   /plugin add beads
+   ```
 
 ### Usage with Agents
 
@@ -535,5 +542,5 @@ If the CLI is not installed, agents work normally without issue tracking.
 
 ## Author
 
-Privkey (hello@privkey.io)
+PrivKey (information@privkey.io)
 

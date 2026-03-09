@@ -1,4 +1,4 @@
-# Quickstart: Gastown + Privkey-Agents + Beads
+# Quickstart: Gastown + PrivKey-Agents + Beads
 
 Multi-agent orchestration for Claude Code with persistent work tracking.
 
@@ -7,7 +7,7 @@ Multi-agent orchestration for Claude Code with persistent work tracking.
 | Tool | Purpose |
 |------|---------|
 | **Gastown** | Orchestrates multiple agents across projects |
-| **Privkey-Agents** | Defines agent behaviors (code-execution, pr-review, etc.) |
+| **PrivKey-Agents** | Defines agent behaviors (code-execution, pr-review, etc.) |
 | **Beads** | Git-native issue tracking - shared memory between sessions |
 
 ## Installation
@@ -19,7 +19,7 @@ curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/insta
 # 2. Gastown (orchestration)
 curl -fsSL https://raw.githubusercontent.com/steveyegge/gastown/main/scripts/install.sh | bash
 
-# 3. Privkey-agents plugin (in Claude Code)
+# 3. PrivKey-agents plugin (in Claude Code)
 /plugin add privkey-agents
 
 # 4. Optional: Beads plugin for Claude Code
@@ -154,7 +154,7 @@ You → Mayor → "Implement feature X"
 | **Hook** | Git worktree where polecat work persists |
 | **Witness** | Per-rig supervisor monitoring polecat health |
 
-## Agent Behaviors (Privkey-Agents)
+## Agent Behaviors (PrivKey-Agents)
 
 | Agent | Use Case |
 |-------|----------|
@@ -226,4 +226,4 @@ cd ~/gt && gt rig add <name> /path/to/repo
 
 - [Gastown](https://github.com/steveyegge/gastown)
 - [Beads](https://github.com/steveyegge/beads)
-- [Privkey-Agents](https://github.com/privkeyio/privkey-agents)
+- [PrivKey-Agents](https://github.com/privkeyio/privkey-agents)

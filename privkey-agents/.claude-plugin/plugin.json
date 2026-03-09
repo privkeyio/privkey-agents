@@ -1,11 +1,14 @@
 {
   "name": "privkey-agents",
-  "description": "Surgical workflow agents for code execution, PR review, PR fixes, refactoring, stress testing, security review, P10 compliance, and PR pipeline orchestration",
+  "description": "Surgical workflow agents for code execution, PR review, PR fixes, refactoring, stress testing, security review, P10 compliance, RMP review, and PR pipeline orchestration",
   "version": "1.7.0",
   "author": {
-    "name": "privkey"
+    "name": "PrivKey",
+    "email": "information@privkey.io"
   },
-  "repository": "https://github.com/privkey/privkey-agents",
+  "repository": "https://github.com/privkeyio/privkey-agents",
+  "homepage": "https://privkey.io/",
   "license": "MIT",
-  "keywords": ["workflow", "code-review", "refactor", "pr", "surgical", "stress-test", "hardening", "security-review", "pipeline"]
+  "category": "productivity",
+  "keywords": ["workflow", "code-review", "refactor", "pr", "surgical", "stress-test", "hardening", "security-review", "pipeline", "p10", "rmp"]
 }

@@ -1,4 +1,4 @@
-# Privkey Agents
+# PrivKey Agents
 
 Surgical workflow agents for Claude Code.
 
