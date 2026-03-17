@@ -12,6 +12,10 @@
 - Never include Co-Authored-By lines
 - Keep PR descriptions focused on the actual changes
 
+## Writing Style
+
+- Never use em dashes (—) or en dashes (–) in any output. Use commas, periods, semicolons, or conjunctions instead.
+
 ## Code Style
 
 - No unnecessary comments in code
