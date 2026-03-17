@@ -33,7 +33,7 @@ Create `~/.mcp.json`:
 ## Per-Project Setup
 
 ```bash
-echo 'alias tldr-sync="tldr warm . && tldr semantic index ."' >> ~/.bashrc
+echo 'alias tldr-sync="tldr warm . && tldr semantic index . --lang all"' >> ~/.bashrc
 ```
 
 Run once per project for full features:
